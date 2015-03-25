@@ -1,14 +1,23 @@
-<?php get_template_part('templates/page', 'header'); ?>
+<!DOCTYPE html>
+<html ng-app="wptheme">
+<head>
+	<base href="/wordpress/">
+	<title>AngularJS Demo Theme</title>
+  <?php wp_head(); ?>
+</head>
+<body>
 
-<?php if (!have_posts()) : ?>
-  <div class="alert alert-warning">
-    <?php _e('Sorry, no results were found.', 'sage'); ?>
-  </div>
-  <?php get_search_form(); ?>
-<?php endif; ?>
+	<header>
+		<h1>
+			<a href="<?php echo site_url(); ?>">AngularJS Demo Theme</a>
+		</h1>
+	</header>
 
-<?php while (have_posts()) : the_post(); ?>
-  <?php get_template_part('templates/content', get_post_type() != 'post' ? get_post_type() : get_post_format()); ?>
-<?php endwhile; ?>
+	<div ng-view></div>
 
-<?php the_posts_navigation(); ?>
+	<footer>
+		&copy; <?php echo date( 'Y' ); ?>
+	</footer>
+
+</body>
+</html>

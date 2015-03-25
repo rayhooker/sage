@@ -9,6 +9,7 @@
  *
  * @link https://github.com/roots/sage/pull/1042
  */
+
 $sage_includes = [
   'lib/utils.php',                 // Utility functions
   'lib/init.php',                  // Initial theme setup and constants
@@ -21,7 +22,7 @@ $sage_includes = [
   'lib/gallery.php',               // Custom [gallery] modifications
   'lib/extras.php',                // Custom functions
 ];
-
+//
 foreach ($sage_includes as $file) {
   if (!$filepath = locate_template($file)) {
     trigger_error(sprintf(__('Error locating %s for inclusion', 'sage'), $file), E_USER_ERROR);
@@ -29,4 +30,38 @@ foreach ($sage_includes as $file) {
 
   require_once $filepath;
 }
+
 unset($file, $filepath);
+
+function my_scripts() {
+  wp_enqueue_script(
+		'angularjs',
+		get_stylesheet_directory_uri() . '/bower_components/angular/angular.js'
+	);
+
+	wp_enqueue_script(
+		'angularjs-route',
+		get_stylesheet_directory_uri() . '/bower_components/angular-route/angular-route.js'
+	);
+
+	wp_register_script(
+		'angularjs-sanitize',
+		get_stylesheet_directory_uri() . '/bower_components/angular-sanitize/angular-sanitize.min.js'
+	);
+
+  wp_enqueue_script(
+		'wpapp',
+		get_stylesheet_directory_uri() . '/assets/scripts/app.js'
+	);
+
+
+    wp_localize_script(
+  		'wpapp',
+  		'myLocalized',
+  		array(
+  			'ngapp' => trailingslashit( get_template_directory_uri() ) . 'app/'
+  			)
+  	);
+
+}
+  add_action( 'wp_enqueue_scripts', 'my_scripts' );

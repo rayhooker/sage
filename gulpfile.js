@@ -137,6 +137,18 @@ var writeToManifest = function(directory) {
 // ## Gulp tasks
 // Run `gulp -T` for a task summary
 
+
+// ### Javascript Concatenation
+// Concatenates the Javascript files for the AngularJS code
+
+var concat = require('gulp-concat');
+
+gulp.task('jsconcat', function() {
+  return gulp.src('./app/**/**/*.js')
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('./assets/scripts/'));
+});
+
 // ### Styles
 // `gulp styles` - Compiles, combines, and optimizes Bower CSS and project CSS.
 // By default this task will only log a warning if a precompiler error is
@@ -236,7 +248,8 @@ gulp.task('watch', function() {
 // ### Build
 // `gulp build` - Run all the build tasks but don't clean up beforehand.
 // Generally you should be running `gulp` instead of `gulp build`.
-gulp.task('build', ['styles', 'scripts', 'fonts', 'images']);
+gulp.task('build', ['styles', 'scripts', 'jsconcat', 'fonts', 'images']);
+//gulp.task('build', ['styles', 'scripts', 'fonts', 'images']);
 
 // ### Wiredep
 // `gulp wiredep` - Automatically inject Less and Sass Bower dependencies. See
